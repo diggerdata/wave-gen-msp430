@@ -17,11 +17,11 @@ void main(void) {
     counter = 0;                                // Reset counter
 
     // Initialize Timer
-    CCTL0 = CCIE;                               // CCR0 interrupt enabled
-    CCTL1 = CCIE;                               // CCR1 interrupt enabled
-    CCR0 = 256;                                 // Set PWM period to 256 clock ticks
-    CCR1 = wave[counter];                       // Set first duty cycle value
-    TACTL = TASSEL_2 + MC_1 + TAIE + TACLR;     // SMCLK, upmode, enable interrupt, clear TA1R
+    TA2CCTL0 = CCIE;                               // CCR0 interrupt enabled
+    TA2CCTL1 = CCIE;                               // CCR1 interrupt enabled
+    TA2CCR0 = 256;                                 // Set PWM period to 256 clock ticks
+    TA2CCR1 = wave[counter];                       // Set first duty cycle value
+    TA2CTL = TASSEL_2 + MC_1 + TAIE + TACLR;     // SMCLK, upmode, enable interrupt, clear TA1R
 
     _BIS_SR(LPM0_bits + GIE);                   // Enter LPM0 w/ interrupt
 }
@@ -33,7 +33,7 @@ void main(void) {
 __interrupt void TIMERA0_ISR(void) {
     P1OUT |= BIT0;              // Set P1.0
 
-    CCR1 = wave[counter];       // Set next duty cycle value
+    TA2CCR1 = wave[counter];       // Set next duty cycle value
     counter += 1;               // Add Offset to CCR0
     if ( counter == 32) {
         counter = 0;            // Reset counter
@@ -45,7 +45,7 @@ __interrupt void TIMERA0_ISR(void) {
  **/
 #pragma vector=TIMERA1_VECTOR
 __interrupt void TIMERA1_ISR(void) {
-    switch( TAIV ) {
+    switch( TA2IV ) {
         case  2:                // CCR1 interrupt
             P1OUT &= ~BIT0;     // Clear P1.0 to determine duty cycle.
             break;
