@@ -20,7 +20,7 @@ void main(void) {
     TA2CCTL0 = CCIE;                               // CCR0 interrupt enabled
     TA2CCTL1 = CCIE;                               // CCR1 interrupt enabled
     TA2CCR0 = 256;                                 // Set PWM period to 256 clock ticks
-    TA2CCR1 = wave[counter];                       // Set first duty cycle value
+    TA2CCR1 = wave[counter];                        // Set first duty cycle value
     TA2CTL = TASSEL_2 + MC_1 + TAIE + TACLR;     // SMCLK, upmode, enable interrupt, clear TA1R
 
     _BIS_SR(LPM0_bits + GIE);                   // Enter LPM0 w/ interrupt

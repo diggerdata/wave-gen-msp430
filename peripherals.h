@@ -63,14 +63,15 @@ extern tContext g_sContext;	// user defined type used by graphics library
 
 // Prototypes for functions defined implemented in peripherals.c
 
-//void DACInit(void);
-//void DACSetValue(unsigned int dac_code);
-//void setupSPI_DAC(void);
+void DACInit(void);
+void DACSetValue(unsigned int dac_code);
+void setupSPI_DAC(void);
 void initLeds(void);
 void setLeds(unsigned char state);
 
 void configDisplay(void);
 void BuzzerOn(void);
+void BuzzerSetPwm(long pwm);
 void BuzzerOff(void);
 
 void configKeypad(void);
